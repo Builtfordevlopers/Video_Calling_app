@@ -1,7 +1,7 @@
 import { Inngest } from "inngest";
-import { connect } from "mongoose";
 import { connectDB } from "./db.js";
-import { clerkClient } from "@clerk/express";
+import { User } from "../models/user.model.js"
+
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "Meet_Tanti" });
@@ -10,7 +10,7 @@ const syncUser = inngest.createFunction(
     {id: "sync-user"},
     {event:"clerk/user.created"},
     async ({event}) =>{
-        await connectDB()
+        await connectDB();
         const {id, email_addresses, first_name, last_name, image_url} = event.data
 
         const newUser = {
